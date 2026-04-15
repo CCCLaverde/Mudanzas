@@ -3,8 +3,10 @@ package com.chavo.mudanza.Service;
 import com.chavo.mudanza.MudanzaMapper;
 import com.chavo.mudanza.dto.MudanzaRequestDTO;
 import com.chavo.mudanza.dto.MudanzaResponseDTO;
+import com.chavo.mudanza.entity.Cliente;
 import com.chavo.mudanza.entity.EstadoMudanza;
 import com.chavo.mudanza.entity.Mudanza;
+import com.chavo.mudanza.repository.ClienteRepository;
 import com.chavo.mudanza.repository.MudanzaRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +18,14 @@ public class MudanzaService {
 
     private final MudanzaRepository repository;
     private final MudanzaMapper mapper;
+    private final ClienteRepository clienteRepository;
 
     public MudanzaService(MudanzaRepository repository,
-                          MudanzaMapper mapper) {
+                          MudanzaMapper mapper,
+                          ClienteRepository clienteRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.clienteRepository = clienteRepository;
     }
 
     // 🔹 Crear mudanza
@@ -32,6 +37,23 @@ public class MudanzaService {
         if (mudanza.getEstado() == null) {
             mudanza.setEstado(EstadoMudanza.PENDIENTE);
         }
+
+        Cliente cliente;
+
+        var clienteDTO = dto.cliente();
+
+        // Opción PRO: evitar duplicados por teléfono
+        cliente = clienteRepository.findByTelefono(clienteDTO.telefono())
+                .orElseGet(() -> {
+                    Cliente nuevo = new Cliente();
+                    nuevo.setNombre(clienteDTO.nombre());
+                    nuevo.setTelefono(clienteDTO.telefono());
+                    nuevo.setEmail(clienteDTO.email());
+                    return clienteRepository.save(nuevo);
+                });
+
+        // 🔥 Asociar cliente a mudanza
+        mudanza.setCliente(cliente);
 
         Mudanza guardada = repository.save(mudanza);
 

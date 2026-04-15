@@ -10,9 +10,13 @@ import org.mapstruct.Mapping;
 public interface MudanzaMapper {
 
     // RequestDTO → Entity
+    @Mapping(target = "cliente", ignore = true)
     Mudanza toEntity(MudanzaRequestDTO dto);
 
+
     // Entity → ResponseDTO
+    @Mapping(source = "cliente.nombre", target = "nombreCliente")
+    @Mapping(source = "cliente.telefono", target = "telefonoCliente")
     MudanzaResponseDTO toResponseDTO(Mudanza mudanza);
 
 }

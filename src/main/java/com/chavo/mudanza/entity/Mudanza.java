@@ -25,6 +25,10 @@ public class Mudanza {
     @Enumerated(EnumType.STRING)
     private EstadoMudanza estado;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
     // 🔹 Constructor vacío
     public Mudanza() {
     }
@@ -98,5 +102,13 @@ public class Mudanza {
 
     public void setEstado(EstadoMudanza estado) {
         this.estado = estado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

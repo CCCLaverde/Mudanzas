@@ -6,13 +6,15 @@ import com.chavo.mudanza.dto.MudanzaResponseDTO;
 import com.chavo.mudanza.entity.EstadoMudanza;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
+
 
 import java.time.LocalDate;
 import java.util.List;
 
 @RestController
 @RequestMapping("/mudanzas")
-@CrossOrigin // Permite conexión con tu frontend
+@CrossOrigin(origins = "http://localhost:5173")// Permite conexión con tu frontend
 public class MudanzaController {
 
     private final MudanzaService service;
@@ -23,7 +25,7 @@ public class MudanzaController {
 
     // 🔹 Crear mudanza
     @PostMapping
-    public MudanzaResponseDTO crear(@RequestBody MudanzaRequestDTO dto) {
+    public MudanzaResponseDTO crear(@RequestBody @Valid MudanzaRequestDTO dto) {
         return service.crear(dto);
     }
 
@@ -59,7 +61,7 @@ public class MudanzaController {
     @PutMapping("/{id}")
     public MudanzaResponseDTO actualizar(
             @PathVariable Long id,
-            @RequestBody MudanzaRequestDTO dto) {
+            @RequestBody @Valid MudanzaRequestDTO dto) {
         return service.actualizar(id, dto);
     }
 

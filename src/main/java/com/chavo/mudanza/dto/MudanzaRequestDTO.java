@@ -1,5 +1,6 @@
 package com.chavo.mudanza.dto;
 
+import com.chavo.mudanza.entity.Cliente;
 import com.chavo.mudanza.entity.EstadoMudanza;
 
 import java.time.LocalDate;
@@ -12,6 +13,7 @@ public record MudanzaRequestDTO(
         String lugarRecogida,
         String lugarEntrega,
         String descripcion,
-        EstadoMudanza estado
+        EstadoMudanza estado,
 
+        ClienteDTO cliente
 ) {}
