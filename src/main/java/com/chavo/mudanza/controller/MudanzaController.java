@@ -1,6 +1,6 @@
 package com.chavo.mudanza.controller;
 
-import com.chavo.mudanza.Service.MudanzaService;
+import com.chavo.mudanza.service.MudanzaService;
 import com.chavo.mudanza.dto.MudanzaRequestDTO;
 import com.chavo.mudanza.dto.MudanzaResponseDTO;
 import com.chavo.mudanza.entity.EstadoMudanza;

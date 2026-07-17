@@ -1,4 +1,4 @@
-package com.chavo.mudanza;
+package com.chavo.mudanza.mapper;
 
 import com.chavo.mudanza.dto.MudanzaRequestDTO;
 import com.chavo.mudanza.dto.MudanzaResponseDTO;

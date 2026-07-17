@@ -1,6 +1,6 @@
-package com.chavo.mudanza.Service;
+package com.chavo.mudanza.service;
 
-import com.chavo.mudanza.MudanzaMapper;
+import com.chavo.mudanza.mapper.MudanzaMapper;
 import com.chavo.mudanza.dto.MudanzaRequestDTO;
 import com.chavo.mudanza.dto.MudanzaResponseDTO;
 import com.chavo.mudanza.entity.Cliente;
