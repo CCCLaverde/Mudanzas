@@ -11,6 +11,7 @@ public interface MudanzaMapper {
 
     // RequestDTO → Entity
     @Mapping(target = "cliente", ignore = true)
+    @Mapping(target = "colaboradores", ignore = true)
     Mudanza toEntity(MudanzaRequestDTO dto);
 
 

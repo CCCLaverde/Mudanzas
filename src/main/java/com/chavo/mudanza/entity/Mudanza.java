@@ -3,6 +3,7 @@ package com.chavo.mudanza.entity;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "mudanzas")
@@ -29,14 +30,29 @@ public class Mudanza {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @ManyToMany
+    @JoinTable(
+            name = "mudanza_colaboradores",
+            joinColumns = @JoinColumn(name = "mudanza_id"),
+            inverseJoinColumns = @JoinColumn(name = "colaborador_id")
+    )
+    private List<Colaborador> colaboradores;
+
     // 🔹 Constructor vacío
     public Mudanza() {
     }
 
     // 🔹 Constructor completo
-    public Mudanza(Long id, LocalDate fecha, LocalTime hora,
-                   String lugarRecogida, String lugarEntrega,
-                   String descripcion, EstadoMudanza estado) {
+    public Mudanza(Long id,
+                   LocalDate fecha,
+                   LocalTime hora,
+                   String lugarRecogida,
+                   String lugarEntrega,
+                   String descripcion,
+                   EstadoMudanza estado,
+                   Cliente cliente,
+                   List<Colaborador> colaboradores) {
+
         this.id = id;
         this.fecha = fecha;
         this.hora = hora;
@@ -44,6 +60,8 @@ public class Mudanza {
         this.lugarEntrega = lugarEntrega;
         this.descripcion = descripcion;
         this.estado = estado;
+        this.cliente = cliente;
+        this.colaboradores = colaboradores;
     }
 
     // 🔹 Getters y Setters
@@ -110,5 +128,13 @@ public class Mudanza {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<Colaborador> getColaboradores() {
+        return colaboradores;
+    }
+
+    public void setColaboradores(List<Colaborador> colaboradores) {
+        this.colaboradores = colaboradores;
     }
 }
