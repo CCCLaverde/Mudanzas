@@ -1,7 +1,9 @@
 package com.chavo.mudanza.mapper;
 
+import com.chavo.mudanza.dto.ColaboradorDTO;
 import com.chavo.mudanza.dto.MudanzaRequestDTO;
 import com.chavo.mudanza.dto.MudanzaResponseDTO;
+import com.chavo.mudanza.entity.Colaborador;
 import com.chavo.mudanza.entity.Mudanza;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -14,10 +16,12 @@ public interface MudanzaMapper {
     @Mapping(target = "colaboradores", ignore = true)
     Mudanza toEntity(MudanzaRequestDTO dto);
 
-
     // Entity → ResponseDTO
     @Mapping(source = "cliente.nombre", target = "nombreCliente")
     @Mapping(source = "cliente.telefono", target = "telefonoCliente")
     MudanzaResponseDTO toResponseDTO(Mudanza mudanza);
+
+    // Colaborador → DTO
+    ColaboradorDTO toColaboradorDTO(Colaborador colaborador);
 
 }
