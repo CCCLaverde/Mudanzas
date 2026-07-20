@@ -9,12 +9,32 @@ import java.util.List;
 
 public interface MudanzaRepository extends JpaRepository<Mudanza, Long> {
 
-    // 🔹 Buscar por fecha
+    // ==========================
+    // FECHA
+    // ==========================
+
     List<Mudanza> findByFecha(LocalDate fecha);
 
-    // 🔹 Buscar por estado
+    List<Mudanza> findByFechaBetween(LocalDate inicio, LocalDate fin);
+
+    // ==========================
+    // ESTADO
+    // ==========================
+
     List<Mudanza> findByEstado(EstadoMudanza estado);
 
-    // 🔹 Buscar por fecha y estado
     List<Mudanza> findByFechaAndEstado(LocalDate fecha, EstadoMudanza estado);
+
+    // ==========================
+    // COLABORADOR
+    // ==========================
+
+    List<Mudanza> findByColaboradores_Id(Long colaboradorId);
+
+    List<Mudanza> findByFechaAndColaboradores_Id(LocalDate fecha, Long colaboradorId);
+
+    List<Mudanza> findByFechaBetweenAndColaboradores_Id(
+            LocalDate inicio,
+            LocalDate fin,
+            Long colaboradorId);
 }
