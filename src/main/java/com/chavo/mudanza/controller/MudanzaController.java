@@ -87,6 +87,20 @@ public class MudanzaController {
         );
     }
 
+    @GetMapping("/rango")
+    public List<MudanzaResponseDTO> obtenerPorRango(
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate inicio,
+
+            @RequestParam
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate fin) {
+
+        return service.obtenerPorRango(inicio, fin);
+    }
+
     @GetMapping("/estado")
     public List<MudanzaResponseDTO> obtenerPorEstado(
             @RequestParam EstadoMudanza estado) {

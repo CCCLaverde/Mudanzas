@@ -10,6 +10,7 @@ import com.chavo.mudanza.mapper.MudanzaMapper;
 import com.chavo.mudanza.repository.ClienteRepository;
 import com.chavo.mudanza.repository.ColaboradorRepository;
 import com.chavo.mudanza.repository.MudanzaRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -60,7 +61,12 @@ public class MudanzaService {
 
     public List<MudanzaResponseDTO> obtenerTodas() {
 
-        return repository.findAll()
+        return repository.findAll(
+                        Sort.by(
+                                Sort.Order.desc("fecha"),
+                                Sort.Order.desc("hora")
+                        )
+                )
                 .stream()
                 .map(mapper::toResponseDTO)
                 .toList();
@@ -182,6 +188,16 @@ public class MudanzaService {
 
                     return clienteRepository.save(nuevo);
                 });
+    }
+
+    public List<MudanzaResponseDTO> obtenerPorRango(
+            LocalDate inicio,
+            LocalDate fin) {
+
+        return repository.findByFechaBetween(inicio, fin)
+                .stream()
+                .map(mapper::toResponseDTO)
+                .toList();
     }
 
     private List<Colaborador> obtenerColaboradores(List<Long> ids) {

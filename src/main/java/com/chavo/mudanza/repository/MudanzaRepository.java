@@ -10,6 +10,12 @@ import java.util.List;
 public interface MudanzaRepository extends JpaRepository<Mudanza, Long> {
 
     // ==========================
+// TODAS ORDENADAS
+// ==========================
+
+    List<Mudanza> findAllByOrderByFechaDescHoraDesc();
+
+    // ==========================
     // FECHA
     // ==========================
 
@@ -37,4 +43,7 @@ public interface MudanzaRepository extends JpaRepository<Mudanza, Long> {
             LocalDate inicio,
             LocalDate fin,
             Long colaboradorId);
+
+
+
 }
