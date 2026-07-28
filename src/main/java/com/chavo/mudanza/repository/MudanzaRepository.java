@@ -3,9 +3,11 @@ package com.chavo.mudanza.repository;
 import com.chavo.mudanza.entity.EstadoMudanza;
 import com.chavo.mudanza.entity.Mudanza;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.time.LocalDate;
 import java.util.List;
+import com.chavo.mudanza.dto.ColaboradorEstadisticaDTO;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface MudanzaRepository extends JpaRepository<Mudanza, Long> {
 
@@ -43,6 +45,24 @@ public interface MudanzaRepository extends JpaRepository<Mudanza, Long> {
             LocalDate inicio,
             LocalDate fin,
             Long colaboradorId);
+
+    @Query("""
+    SELECT new com.chavo.mudanza.dto.ColaboradorEstadisticaDTO(
+        c.id,
+        c.nombre,
+        COUNT(m.id)
+    )
+    FROM Mudanza m
+    JOIN m.colaboradores c
+    WHERE EXTRACT(MONTH FROM m.fecha) = :mes
+      AND EXTRACT(YEAR FROM m.fecha) = :anio
+    GROUP BY c.id, c.nombre
+    ORDER BY COUNT(m.id) DESC
+""")
+    List<ColaboradorEstadisticaDTO> obtenerEstadisticasColaboradores(
+            @Param("mes") Integer mes,
+            @Param("anio") Integer anio
+    );
 
 
 
