@@ -1,5 +1,6 @@
 package com.chavo.mudanza.repository;
 
+import com.chavo.mudanza.dto.IngresoEstadisticaDTO;
 import com.chavo.mudanza.entity.EstadoMudanza;
 import com.chavo.mudanza.entity.Mudanza;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -64,6 +65,20 @@ public interface MudanzaRepository extends JpaRepository<Mudanza, Long> {
             @Param("anio") Integer anio
     );
 
+    @Query("""
+    SELECT new com.chavo.mudanza.dto.IngresoEstadisticaDTO(
+        m.fecha,
+        COALESCE(SUM(m.precio), 0)
+    )
+    FROM Mudanza m
+    WHERE m.estadoPago = com.chavo.mudanza.entity.EstadoPago.PAGADO
+    GROUP BY m.fecha
+    ORDER BY m.fecha
+""")
+    List<IngresoEstadisticaDTO> obtenerIngresosPorSemana(
+            LocalDate inicio,
+            LocalDate fin
+    );
 
 
 }

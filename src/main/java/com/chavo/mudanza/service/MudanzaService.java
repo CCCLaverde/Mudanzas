@@ -12,6 +12,7 @@ import com.chavo.mudanza.repository.ColaboradorRepository;
 import com.chavo.mudanza.repository.MudanzaRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import com.chavo.mudanza.entity.EstadoPago;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -44,8 +45,14 @@ public class MudanzaService {
 
         Mudanza mudanza = mapper.toEntity(dto);
 
+// Estado de la mudanza
         if (mudanza.getEstado() == null) {
             mudanza.setEstado(EstadoMudanza.PENDIENTE);
+        }
+
+// Estado del pago
+        if (mudanza.getEstadoPago() == null) {
+            mudanza.setEstadoPago(EstadoPago.PENDIENTE);
         }
 
         mudanza.setCliente(obtenerOCrearCliente(dto));
@@ -145,7 +152,12 @@ public class MudanzaService {
         existente.setLugarRecogida(dto.lugarRecogida());
         existente.setLugarEntrega(dto.lugarEntrega());
         existente.setDescripcion(dto.descripcion());
+
+        existente.setPrecio(dto.precio());
+
         existente.setEstado(dto.estado());
+
+        existente.setEstadoPago(dto.estadoPago());
 
         existente.setCliente(obtenerOCrearCliente(dto));
 

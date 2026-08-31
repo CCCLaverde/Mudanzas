@@ -11,17 +11,26 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface MudanzaMapper {
 
-    // RequestDTO → Entity
+    // ============================
+    // RequestDTO -> Entity
+    // ============================
+
     @Mapping(target = "cliente", ignore = true)
     @Mapping(target = "colaboradores", ignore = true)
     Mudanza toEntity(MudanzaRequestDTO dto);
 
-    // Entity → ResponseDTO
+    // ============================
+    // Entity -> ResponseDTO
+    // ============================
+
     @Mapping(source = "cliente.nombre", target = "nombreCliente")
     @Mapping(source = "cliente.telefono", target = "telefonoCliente")
     MudanzaResponseDTO toResponseDTO(Mudanza mudanza);
 
-    // Colaborador → DTO
+    // ============================
+    // Colaborador -> DTO
+    // ============================
+
     ColaboradorDTO toColaboradorDTO(Colaborador colaborador);
 
 }

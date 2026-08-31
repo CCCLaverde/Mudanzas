@@ -1,6 +1,8 @@
 package com.chavo.mudanza.entity;
 
 import jakarta.persistence.*;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -23,8 +25,15 @@ public class Mudanza {
 
     private String descripcion;
 
+    // 💰 Valor total de la mudanza
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal precio;
+
     @Enumerated(EnumType.STRING)
     private EstadoMudanza estado;
+
+    @Enumerated(EnumType.STRING)
+    private EstadoPago estadoPago;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
@@ -38,33 +47,46 @@ public class Mudanza {
     )
     private List<Colaborador> colaboradores;
 
-    // 🔹 Constructor vacío
+    // ==========================
+    // Constructor vacío
+    // ==========================
+
     public Mudanza() {
     }
 
-    // 🔹 Constructor completo
-    public Mudanza(Long id,
-                   LocalDate fecha,
-                   LocalTime hora,
-                   String lugarRecogida,
-                   String lugarEntrega,
-                   String descripcion,
-                   EstadoMudanza estado,
-                   Cliente cliente,
-                   List<Colaborador> colaboradores) {
+    // ==========================
+    // Constructor completo
+    // ==========================
 
+    public Mudanza(
+            Long id,
+            LocalDate fecha,
+            LocalTime hora,
+            String lugarRecogida,
+            String lugarEntrega,
+            String descripcion,
+            BigDecimal precio,
+            EstadoMudanza estado,
+            EstadoPago estadoPago,
+            Cliente cliente,
+            List<Colaborador> colaboradores
+    ) {
         this.id = id;
         this.fecha = fecha;
         this.hora = hora;
         this.lugarRecogida = lugarRecogida;
         this.lugarEntrega = lugarEntrega;
         this.descripcion = descripcion;
+        this.precio = precio;
         this.estado = estado;
+        this.estadoPago = estadoPago;
         this.cliente = cliente;
         this.colaboradores = colaboradores;
     }
 
-    // 🔹 Getters y Setters
+    // ==========================
+    // Getters & Setters
+    // ==========================
 
     public Long getId() {
         return id;
@@ -114,12 +136,28 @@ public class Mudanza {
         this.descripcion = descripcion;
     }
 
+    public BigDecimal getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+        this.precio = precio;
+    }
+
     public EstadoMudanza getEstado() {
         return estado;
     }
 
     public void setEstado(EstadoMudanza estado) {
         this.estado = estado;
+    }
+
+    public EstadoPago getEstadoPago() {
+        return estadoPago;
+    }
+
+    public void setEstadoPago(EstadoPago estadoPago) {
+        this.estadoPago = estadoPago;
     }
 
     public Cliente getCliente() {

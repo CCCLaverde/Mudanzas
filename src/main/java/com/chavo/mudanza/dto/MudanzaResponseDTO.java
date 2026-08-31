@@ -1,8 +1,9 @@
 package com.chavo.mudanza.dto;
 
 import com.chavo.mudanza.entity.EstadoMudanza;
-import jakarta.validation.constraints.NotBlank;
+import com.chavo.mudanza.entity.EstadoPago;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -10,16 +11,12 @@ import java.util.List;
 public record MudanzaResponseDTO(
 
         Long id,
+
         LocalDate fecha,
         LocalTime hora,
 
-        @NotBlank
         String lugarRecogida,
-
-        @NotBlank
         String lugarEntrega,
-
-        @NotBlank
         String descripcion,
 
         EstadoMudanza estado,
@@ -27,6 +24,10 @@ public record MudanzaResponseDTO(
         String nombreCliente,
         String telefonoCliente,
 
-        List<ColaboradorDTO> colaboradores
+        List<ColaboradorDTO> colaboradores,
+
+        BigDecimal precio,
+
+        EstadoPago estadoPago
 
 ) {}
